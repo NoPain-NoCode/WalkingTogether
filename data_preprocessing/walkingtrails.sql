@@ -15,3 +15,10 @@ create table walkingtrails(
     latitude    float   not null,
     primary key(point_number)
 );
+
+load data infile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/road_final.csv'
+into table walkingtrails
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\n'
+ignore 1 rows;
