@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+.wrap {
+    font-family: 'Jua', sans-serif;
+    width: 300px;
+    margin: auto;
+    margin-top: 70px;
+    text-align: center;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+.logo {
+    width: 100px;
+}
+
+.wannawalk-logo {
+    font-size: 23px;
+    color: black;
+}
+
+.form-control {
+}
+
+.form-id {
+    border-radius: .4rem .4rem 0 0;
+}
+
+.form-pw {
+    border-radius: 0 0 .4rem .4rem;
+}
+
+.login {
+    margin: 15px 0;
+}
+
+.login-btn {
+
+}
+
+.btn {
+    margin: 5px 0;
+}
+
+.find {
+    width: 300px;
+    margin: 10px 0 30px 0;
+}
+
+.sns {
+    font-size: 17px;
+}
+
+.sns-login {
+    display: flex;
+    justify-content: center;
+}
+
+.sns-icon {
+    height: 50px;
+    margin: 3px;
+}
+
+/* input {
+    margin: 10px;
+    width: 300px;
+    height: 30px;
+    color: black;
+    padding: 0;
+} */

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>WannaWalk</title>
+    <meta name="author" content="WannaWalk">
+    <meta name="description" content="산책로">
+    <meta name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css"> <!-- css 기본설정 초기화 -->
+    <link rel="stylesheet" href="../style/walkDetail.css"> <!--css 연결-->
+    
+</head>
+<body>
+    <div class="main-container">
+        <div class="container">
+            <div class="h-container">
+                <div class="h-container-left">
+                    <button class="logoBtn"><img src="../img/icon/logo.png" id="logoBtnImg"></button><b>산책갈까?</b>
+                </div>
+                <div class="h-container-right">
+                    <div class="s-container">
+                        <input class="searchBox" type="text" placeholder="산책로 검색하기">
+                        <button class="searchBtn"><img src="../img/searchBtn.png" id="searchBtnImg"></button>
+                    </div>
+                    <div class="user-container">
+                        <b class="loginBtn">로그인</b><button class="mypageBtn"><img src="../img/icon/user.png" id="mypageBtnImg"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    
+    <div class="slider-1">
+        <div class="slides">
+            <div class="active" style="background-image:url(../img/walkImg_1.jpg);"></div>
+            <div style="background-image:url(../img/roadimg_1.jpg);"></div>
+            <div style="background-image:url(../img/roadimg_2.jpg);"></div>
+            <div style="background-image:url(../img/roadimg_3.jpg);"></div>
+        </div>
+        <div class="page-btns">
+            <div class="active"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="side-btns">
+            <div>
+                <span><i class="fas fa-angle-left"></i></span>
+            </div>
+            <div>
+                <span><i class="fas fa-angle-right"></i></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main-container">
+        <div class="container">
+            <div class="map-List">
+                <div class="map">
+                    <img class="Img" src="../img/map.PNG">
+                </div>
+                <div class="info">
+                    반려동물 동반 가능 여부 : 모르겠어요
+                    거리/시간
+                </div>
+            </div>
+
+            <div class="review-container">
+                <p class="contents">
+                    <span><img class="user-image" src="../img/roadimg_2.jpg" style="width: 300px"></span>
+                    <span>★★★☆☆</span>
+                    <div style="float: right;">8시간전</div>
+                    <div class="user-name"></div>
+                
+                    <div>하여도 가슴이 설레는 말이다. 청춘! 너의 두손을 가슴에 대고 물방아 같은 성장의 고동을 들어 보라
+                        청춘의 피는 끓는다 끓는 피에 뛰노는 심장은 거선의 기관과 같이 힘있다 이것이다. 인류의 역사를
+                        꾸며 내려온 동력은
+                    </div>
+                </p>
+                
+            </div>
+        </div>
+
+
+        
+        
+    
+    </div>  
+    
+</body>
+<script src="../script/walkDetail.js"></script>
+</html>
