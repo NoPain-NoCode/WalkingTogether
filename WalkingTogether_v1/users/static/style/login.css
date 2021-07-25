@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+.wrap {
+    font-family: 'Jua', sans-serif;
+    width: 300px;
+    margin: auto;
+    margin-top: 70px;
+    text-align: center;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+.logo {
+    width: 100px;
+}
+
+.wannawalk-logo {
+    font-size: 23px;
+    color: black;
+}
+
+
+.sns {
+    margin-top: 50px;
+    font-size: 17px;
+}
+
+.sns-login {
+    /* display: flex; */
+    justify-content: center;
+}
+
+.sns-icon {
+    height: 50px;
+    margin: 3px;
+}
+
