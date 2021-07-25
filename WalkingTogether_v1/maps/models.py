@@ -14,7 +14,7 @@ class WarlkingTrails(models.Model):
     _explain = models.CharField(max_length=5000,verbose_name='포인트설명')
     point_number = models.IntegerField(verbose_name='포인트순번')
     point_name = models.CharField(max_length=255,verbose_name='포인트명칭')
-    longitude = models.DecimalField(verbose_name='경도')
-    latitude  = models.DecimalField(verbose_name='위도')
+    longitude = models.DecimalField(decimal_places=14,max_digits=17,verbose_name='경도')
+    latitude  = models.DecimalField(decimal_places=14,max_digits=16,verbose_name='위도')
     class Meta:
         db_table = 'Walkingtrails'
