@@ -1,13 +1,14 @@
 from re import I
 from django.http import request
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import Q, fields
 # from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework import generics, mixins, serializers
+from rest_framework import generics, mixins
 
 from .serializers import WalkingTrailsSerializer
 
 from haversine import haversine
+from decimal import Decimal
 from .models import WalkingTrails
 
 
@@ -15,9 +16,13 @@ from .models import WalkingTrails
 def getBound(lat, lng):
     position = (lat, lng)
     # 반경 2km 기준 정보
+    lat_x = Decimal(lat - 0.01)
+    lat_y = Decimal(lat + 0.01)
+    lng_x = Decimal(lng - 0.015)
+    lng_y = Decimal(lng + 0.015)
     condition = (
-        Q(lat_range = (lat - 0.01, lat + 0.01)) |
-        Q(long_range = (lng - 0.015, lng + 0.015))
+        Q(latitude__range = (lat_x, lat_y)) |
+        Q(longitude__range = (lng_x, lng_y))
     )
 
     # DB에서 산책로 불러와 반경 2km를 road_infos에 저장
@@ -26,9 +31,10 @@ def getBound(lat, lng):
     )
 
     # 반경 2km내의 산책로
-    near_road_infos = {info for info in road_infos 
-                        if haversine(position, (info.lat, info.lng))}
-    return near_road_infos
+    near_road_infos = [info.point_number for info in road_infos 
+                        if haversine(position, (info.latitude, info.longitude)) <= 2]
+    result = WalkingTrails.objects.filter(point_number__in = near_road_infos)
+    return result
 
 
 # Create your views here.
