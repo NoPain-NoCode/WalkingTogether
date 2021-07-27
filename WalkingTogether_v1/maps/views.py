@@ -6,11 +6,24 @@ from django.db.models import Q, fields
 from rest_framework import generics, mixins
 
 from .serializers import WalkingTrailsSerializer
+from .form import PostForm
 
 from haversine import haversine
 from decimal import Decimal
 from .models import WalkingTrails
 
+def post_point(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            # 프론트에서 point 받아줌
+            point = request.POST.get('')
+            return point
+    else:
+        form = PostForm()
+    
+    # Post 못받으면 임시 위경도 반환함
+    return (126.9478376, 37.4669357)
 
 # 위경도로 범위 구해서 리턴하는 함수
 def getBound(lat, lng):
@@ -46,10 +59,14 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
             # 현재 위치 정보 받아오기
             # longitude = float(request.GET.get('longitude',None))
             # latitude = float(request.GET.get('latitude',None))
+            point = post_point
 
+            latitude = point[0]
+            longitude = point[1]
+            
             # 임시 위경도
-            longitude = 126.9478376
-            latitude = 37.4669357
+            # longitude = 126.9478376
+            # latitude = 37.4669357
 
             near_road = getBound(latitude,longitude)
         except:
