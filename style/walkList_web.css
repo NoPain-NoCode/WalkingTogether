@@ -169,31 +169,34 @@
 	
 }
 
-/* 산책로 리스트 */
-.list-container {
-	margin: 0 10px;
+.box {
 	display: flex;
-
-}
-.list-container .listItem {
-	align-items: center;
-
+	padding: 20px;
 	background-color: var(--main-bg-color);
-	border: none;
-	border-radius: 10px;
-	width: 300px;
-
-	margin: 5px 0;
+	border-radius: 15px;
+	width: 260px;
+	margin: 0 0 10px 0;
 }
-
-.address {
+.info {
+	text-align: left;
+	margin-right: auto;
 	
 }
+.path-name {
 
-.list-container .listItem .heartImg {
-	height: 30px;
-	margin: 10px;
 }
+.path-address {
+	float: left;
+	margin: 20px;
+}
+.heart {
+	float: right;
+	text-align: right;
+}
+.heart-img {
+	width: 30px;
+}
+
 
 /* 하단메뉴
 .fixedBar {
