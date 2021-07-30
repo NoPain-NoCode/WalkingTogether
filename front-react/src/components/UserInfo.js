@@ -23,7 +23,7 @@ const UserInfo = ()=>{
                 allow,
             };
             console.log(data);
-            await client.post('/api/userInfo', data);
+            await client.post('/users/update/api', data);
         }catch(e){
             console.log(e);
         }

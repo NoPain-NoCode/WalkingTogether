@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const client = axios.create({
-    baseURL: 'deeplearner.smu.ac.kr'
+    baseURL: 'http://deeplearner.smu.ac.kr:8000/'
 });
 
 export default client;
