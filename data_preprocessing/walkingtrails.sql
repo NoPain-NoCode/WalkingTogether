@@ -11,12 +11,14 @@ create table walkingtrails(
     _explain varchar(5000),
     point_number    int not null,
     point_name  varchar(255) not null,
-    longitude   float   not null,
-    latitude    float   not null,
+    longitude   decimal(17,14)   not null,
+    latitude    decimal(16,14)   not null,
     primary key(point_number)
 );
 
-load data infile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/road_final.csv'
+-- load data infile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/road_final.csv'
+load data infile '/var/lib/mysql-files/road_final.csv'
+load data infile '/var/lib/mysql-files/road_final.csv'
 into table walkingtrails
 fields terminated by ','
 enclosed by '"'
