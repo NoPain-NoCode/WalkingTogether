@@ -6,18 +6,18 @@ road_file = "C:\\Users\\DY\Documents\\WalkingTogether\\data_preprocessing\\raw_d
 road = gpd.read_file(road_file, encoding='utf-8')
 
 print(road)
-cities = road[road.Id=="0"]
+# cities = road[road.Id=="0"]
 
 
 
 
-m = folium.Map(
-    location = [37.46715465768088, 126.94819572254312],
-    tiles = 'Stamen Terrain',
-    zoom_start = 7
-)
+# m = folium.Map(
+#     location = [37.46715465768088, 126.94819572254312],
+#     tiles = 'Stamen Terrain',
+#     zoom_start = 7
+# )
 
-folium.PolyLine(
-    locations = cities,
-    tooltip='PolyLine'
-).add_to(m)
+# folium.PolyLine(
+#     locations = cities,
+#     tooltip='PolyLine'
+# ).add_to(m)
