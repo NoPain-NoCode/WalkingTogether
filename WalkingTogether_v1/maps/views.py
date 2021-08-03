@@ -40,9 +40,10 @@ def post_point(request):
     return (126.9478376, 37.4669357)
 
 # 위경도로 범위 구해서 리턴하는 함수
-@csrf_protect
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# 주석처리된 것 주석 풀면 getBound 함수가 적용 안됨
+# @csrf_protect
+# @api_view(['GET'])
+@permission_classes([IsAuthenticated|ReadOnly])
 def getBound(lat, lng):
     position = (lat, lng)
     # 반경 2km 기준 정보
@@ -54,7 +55,7 @@ def getBound(lat, lng):
         Q(latitude__range = (lat_x, lat_y)) |
         Q(longitude__range = (lng_x, lng_y))
     )
-
+    
     # DB에서 산책로 불러와 반경 2km를 road_infos에 저장
     road_infos = (
         WalkingTrails.objects.filter(condition)
@@ -81,7 +82,7 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
             # 임시 위경도
             longitude = 126.9478376
             latitude = 37.4669357
-
+            
             near_road = getBound(latitude,longitude)
         except:
             near_road = WalkingTrails.objects.all()
