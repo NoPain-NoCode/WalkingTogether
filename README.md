@@ -18,34 +18,8 @@
 - 주요 table 명
   - 공공데이터 산책로 : walkingtrails
   - 유저 : user         
+![table](./img/table.PNG)
 
-
-+----------------------------------+      
-| Tables_in_walkdb                 |     
-+----------------------------------+     
-| account_emailaddress             |     
-| account_emailconfirmation        |     
-| auth_group                       |     
-| auth_group_permissions           |     
-| auth_permission                  |     
-| authtoken_token                  |     
-| django_admin_log                 |    
-| django_content_type              |    
-| django_migrations                |     
-| django_session                   |    
-| django_site                      |     
-| socialaccount_socialaccount      |     
-| socialaccount_socialapp          |    
-| socialaccount_socialapp_sites    |     
-| socialaccount_socialtoken        |     
-| token_blacklist_blacklistedtoken |    
-| token_blacklist_outstandingtoken |     
-| user                             |     
-| user_groups                      |     
-| user_user_permissions            |     
-| walkingtrails                    |     
-+----------------------------------+    
-21 rows in set (0.00 sec)    
 ## BE
 
 ### 21.07.25
