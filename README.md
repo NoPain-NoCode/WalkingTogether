@@ -12,6 +12,7 @@
 
 그 외 자세한 버전 정보는 [requirements.txt](./requirements.txt) 참고 요망.
 # DB
+`mysql -u root -p` 로 mysql 접속한 뒤, [walkingtrails.sql](walkingtrails.sql) 의 쿼리문 순차 실행하면 db셋팅 동일하게 됩니다.
 - DB명 : walkdb
 - id/passwd : npnc/npnc
 - 주요 table 명
