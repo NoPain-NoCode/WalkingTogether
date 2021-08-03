@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders', # CORS 관련 추가
     # rest framework
     'rest_framework',
     'rest_framework.authtoken',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # CORS 관련 추가
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -138,6 +140,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CORS 관련 추가 
+CORS_ORIGIN_WHITELIST = ['http://203.237.169.237:3001' ,'http://203.237.169.237:3001',
+                        'http://203.237.169.237:3000' ,'http://203.237.169.237:3000',
+                        'http://localhost:3001' ,'http://127.0.0.1:3001'
+                        'http://localhost:3000' ,'http://127.0.0.1:3000'] 
+CORS_ALLOW_CREDENTIALS = True
+
 
 # user model 설정
 AUTH_USER_MODEL = 'user.User'
