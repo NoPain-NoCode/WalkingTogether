@@ -8,7 +8,7 @@
 |개발환경(IDE)|visual studio code| | |
 |Framework|Django|3.2.5|백엔드 개발|
 |DB|MySQL|8.0.22| |
-|개발언어|python3.8.5|백엔드 개발|
+|개발언어|python3|3.8.5|백엔드 개발|
 
 그 외 자세한 버전 정보는 [requirements.txt](./requirements.txt) 참고 요망.
 # DB
