@@ -142,10 +142,10 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS 관련 추가 
-CORS_ORIGIN_WHITELIST = ['http://203.237.169.237:3001' ,'http://203.237.169.237:3001',
-                        'http://203.237.169.237:3000' ,'http://203.237.169.237:3000',
-                        'http://localhost:3001' ,'http://127.0.0.1:3001'
-                        'http://localhost:3000' ,'http://127.0.0.1:3000'] 
+CORS_ORIGIN_WHITELIST = ['http://203.237.169.237:3001', 'http://203.237.169.237:3001',
+                        'http://203.237.169.237:3000', 'http://203.237.169.237:3000',
+                        'http://localhost:3001', 'http://127.0.0.1:3001',
+                        'http://localhost:3000', 'http://127.0.0.1:3000'] 
 CORS_ALLOW_CREDENTIALS = True
 
 
