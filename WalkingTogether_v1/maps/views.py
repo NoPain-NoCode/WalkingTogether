@@ -8,7 +8,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 from rest_framework.response import Response
 
+from django.views.decorators.csrf import csrf_protect
+
 from .serializers import WalkingTrailsSerializer
+from .form import PostForm
 
 from haversine import haversine
 from decimal import Decimal
@@ -19,7 +22,25 @@ class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         return request.method in SAFE_METHODS
 
+
+@csrf_protect
+@api_view(["POST", "GET"])
+def post_point(request):
+    if request.method == 'POST':
+        # serializer = WalkingTrailsSerializer(data=request.data)
+        form = PostForm(request.POST)
+        if form.is_valid():
+            # 프론트에서 point 받아줌
+            point = request.POST.get('currentPosition')
+            return point
+    else:
+        form = PostForm()
+    
+    # Post 못받으면 임시 위경도 반환함
+    return (126.9478376, 37.4669357)
+
 # 위경도로 범위 구해서 리턴하는 함수
+@csrf_protect
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getBound(lat, lng):

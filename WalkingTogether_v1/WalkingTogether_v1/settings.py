@@ -17,6 +17,8 @@ import os
 import json
 import sys
 
+from corsheaders.defaults import default_headers
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,7 +32,7 @@ SECRET_KEY = my_settings.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -61,6 +63,8 @@ INSTALLED_APPS +=[
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
     'allauth.socialaccount.providers.google',
+    # cors
+    'corsheaders',
 ]
 
 # Django-Rest-Framework 설정
@@ -71,12 +75,19 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
     ),
 }
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -201,3 +212,34 @@ SIMPLE_JWT = {
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
 }
+
+# CORS 관련 추가
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_TRUSTED_ORIGINS = ['http://203.237.169.237:3001', 'http://203.237.169.237:3000',
+                        'http://203.237.169.237:8001', 'http://203.237.169.237:8000',
+                        'http://localhost:3001' ,'http://127.0.0.1:3001',
+                        'http://localhost:3000' ,'http://127.0.0.1:3000',
+                        'http://localhost:8001' ,'http://127.0.0.1:8001',
+                        'http://localhost:8000' ,'http://127.0.0.1:8000',]
+
+CORS_ORIGIN_WHITELIST = ['http://203.237.169.237:3001', 'http://203.237.169.237:3000',
+                        'http://203.237.169.237:8001', 'http://203.237.169.237:8000',
+                        'http://localhost:3001' ,'http://127.0.0.1:3001',
+                        'http://localhost:3000' ,'http://127.0.0.1:3000',
+                        'http://localhost:8001' ,'http://127.0.0.1:8001',
+                        'http://localhost:8000' ,'http://127.0.0.1:8000',] 
+
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'access-control-allow-credentials',
+    'access-control-allow-origin',
+    'access-control-request-method',
+    'access-control-request-headers',
+    'accept-language',
+    'host',
+    'csrftoken',
+	'X-XSRF-TOKEN',
+]
