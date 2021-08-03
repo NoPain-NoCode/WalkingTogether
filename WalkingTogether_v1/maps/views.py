@@ -4,6 +4,9 @@ from django.shortcuts import render
 from django.db.models import Q, fields
 # from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework import generics, mixins
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
+from rest_framework.response import Response
 
 from .serializers import WalkingTrailsSerializer
 
@@ -12,7 +15,13 @@ from decimal import Decimal
 from .models import WalkingTrails
 
 
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
+
 # 위경도로 범위 구해서 리턴하는 함수
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getBound(lat, lng):
     position = (lat, lng)
     # 반경 2km 기준 정보
@@ -39,6 +48,7 @@ def getBound(lat, lng):
 
 # Create your views here.
 class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
+    permission_classes = [IsAuthenticated|ReadOnly]
     serializer_class = WalkingTrailsSerializer
     
     def get_queryset(self):
