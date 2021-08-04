@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import KakaoLogin, GoogleLogin, KakaoLoginView
+from .views import GoogleLogin, KakaoLoginView
 
 app_name = 'user'
 
