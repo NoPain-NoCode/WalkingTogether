@@ -23,7 +23,7 @@ class GoogleLogin(SocialLoginView):
 class KakaoLoginView(View): #카카오 로그인
     def get(self, request):
         access_token = request.headers["Authorization"]
-        headers      = ({"Authorization" : f"Bearer {access_token}"})
+        headers      = ({"Authorization" : f"{access_token}"})
         url          = "https://kapi.kakao.com/v2/user/me" # Authorization(프론트에서 받은 토큰)을 이용해서 회원의 정보를 확인하기 위한 카카오 API 주소
         response     = requests.request("POST", url, headers=headers) # API를 요청하여 회원의 정보를 response에 저장
         user         = response.json()
