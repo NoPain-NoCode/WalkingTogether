@@ -3,6 +3,13 @@ from django.contrib.auth.models import (BaseUserManager, AbstractUser)
 from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
+class SocialPlatform(models.Model):
+    platform = models.CharField(max_length=20, default=0)
+
+    class Meta:
+        db_table = "social_platform"
+
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
@@ -69,6 +76,16 @@ class User(AbstractUser):
     warning_stack = models.IntegerField(
         verbose_name='신고 누적 횟수',
         default=0)
+    social = models.ForeignKey(
+        SocialPlatform,
+        on_delete=models.CASCADE,
+        max_length=20,
+        blank=True,
+        db_constraint=False,
+        default=1)
+    social_login_id = models.CharField(
+        max_length=50,
+        blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import KakaoLogin, GoogleLogin
+from .views import KakaoLogin, GoogleLogin, KakaoLoginView
 
 app_name = 'user'
 
 urlpatterns = [
-    path('rest-auth/kakao/', KakaoLogin.as_view(), name='kakao_login'),
     path('rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
+    path('login/kakao/',KakaoLoginView.as_view(), name='kakao_login_view'),
 ]

@@ -18,15 +18,21 @@ from django.urls import path, include
 
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
+import user.views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', user.views.home, name='home'),
     # jwt token
     path('api-jwt-auth/', obtain_jwt_token),          # JWT 토큰 획득
     path('api-jwt-auth/refresh/', refresh_jwt_token), # JWT 토큰 갱신
-    path('api-jwt-auth/verify/$', verify_jwt_token),   # JWT 토큰 확인
+    path('api-jwt-auth/verify/', verify_jwt_token),   # JWT 토큰 확인
     # rest-auth
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    # accounts
+    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('dj_rest_auth.urls')),
     # my apps include
     path('user/', include('user.urls')),
 ]

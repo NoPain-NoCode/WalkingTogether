@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User
+from .models import User, SocialPlatform
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
@@ -10,3 +10,8 @@ class UserAdmin(admin.ModelAdmin):
         return True
         
 admin.site.register(User, UserAdmin)
+
+class SocialPlatformAdmin(admin.ModelAdmin):
+    list_display = ('platform',)
+        
+admin.site.register(SocialPlatform, SocialPlatformAdmin)
