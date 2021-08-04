@@ -7,6 +7,8 @@ from rest_auth.registration.views import SocialLoginView
 from rest_auth.utils import jwt_encode
 import requests
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from .models import User, SocialPlatform
 from .serializer import UserSerializer, UserInfoUpdateSerializer
@@ -20,6 +22,7 @@ class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class KakaoLoginView(View): #카카오 로그인
     def get(self, request):
         access_token = request.headers["Authorization"]
