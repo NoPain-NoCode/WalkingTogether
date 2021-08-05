@@ -1,16 +1,13 @@
 import json
 from django.shortcuts import render
 
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from django.views.generic.base import View
-from rest_auth.registration.views import SocialLoginView
 from rest_auth.utils import jwt_encode
 import jwt
 import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.parsers import JSONParser
 
 from .models import User, SocialPlatform
@@ -20,10 +17,6 @@ import my_settings
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
-
-
-class GoogleLogin(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
 
 
 @method_decorator(csrf_exempt, name='dispatch')
