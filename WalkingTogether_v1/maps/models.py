@@ -19,3 +19,30 @@ class WalkingTrails(models.Model):
     class Meta:
         managed = False
         db_table = 'walkingtrails'
+
+class Review():
+    id = models.IntegerField(primary_key=True,verbose_name="리뷰 id")
+    point_id = models.ForeignKey("WalkingTrails",related_name="walkingtrails", on_delete=models.CASCADE, db_column='point_id', verbose_name="산책로 id")
+    # user_id = models.ForeignKey("User",related_name="user", on_delete=models.CASCADE, db_column='user_id', verbose_name="User id")
+    content = models.TextField(null=True, verbose_name="내용")
+    create_date = models.DateTimeField(auto_now_add=True, verbose_name="작성시간")
+    image = models.ImageField(null=True, verbose_name="이미지")
+    point = (
+        ('1',1),
+        ('2',2),
+        ('3',3),
+        ('4',4),
+        ('5',5),
+    )
+    dog=(
+        ('가능'),
+        ('불가능'),
+    )
+
+    objects = models.Manager()
+
+    def __str__(self):
+        pass
+    class Meta:
+        managed = False
+        db_table = 'review'

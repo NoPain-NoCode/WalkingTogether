@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
+
 from pathlib import Path
 import my_settings
 
@@ -133,3 +135,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 이미지 업로드 디렉토리
+MEDIA_URL = '' # 업로드 경로
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads') # 로컬디렉토리에 저장할 경로
