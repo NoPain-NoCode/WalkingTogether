@@ -12,10 +12,16 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 
 # from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework import generics, mixins, serializers
-from rest_framework import viewsets
+from rest_framework import generics, mixins
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
+from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
+from rest_framework import permissions
 
-from .serializers import WalkingTrailsSerializer, ReviewSerializer
+from django.views.decorators.csrf import csrf_protect
+
+from .serializers import WalkingTrailsSerializer, ReviewSerializer, PointSerializer
 from .form import PostForm
 
 from haversine import haversine
@@ -23,20 +29,12 @@ from decimal import Decimal
 
 from .models import WalkingTrails, Review
 
-def post_point(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            # 프론트에서 point 받아줌
-            point = request.POST.get('')
-            return point
-    else:
-        form = PostForm()
-    
-    # Post 못받으면 임시 위경도 반환함
-    return (126.9478376, 37.4669357)
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
 
 # 위경도로 범위 구해서 리턴하는 함수
+@permission_classes([permissions.AllowAny,])
 def getBound(lat, lng):
     position = (lat, lng)
     # 반경 2km 기준 정보
@@ -64,13 +62,17 @@ def getBound(lat, lng):
 # Create your views here.
 class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
     serializer_class = WalkingTrailsSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def __init__(self):
+        self.point = (37.4669357, 126.9478376)
     
     def get_queryset(self):
         try:
             # 현재 위치 정보 받아오기
             # longitude = float(request.GET.get('longitude',None))
             # latitude = float(request.GET.get('latitude',None))
-            point = post_point
+            point = self.point
 
             latitude = point[0]
             longitude = point[1]
@@ -87,6 +89,21 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
     
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            print('post 들어옴')
+            data = JSONParser().parse(request)
+            latitude = data['lat']
+            longitude = data['lng']
+            try:
+                near_road = getBound(latitude,longitude)
+                serializer = WalkingTrailsSerializer(near_road, many=True)
+            except:
+                near_road = WalkingTrails.objects.all()
+                serializer = WalkingTrailsSerializer(near_road, many=True)
+                
+        return Response(serializer.data)
 
 
 # 리뷰 관련 뷰
