@@ -135,13 +135,14 @@ class GoogleLoginView(View): #구글 로그인
             return JsonResponse(response_data, json_dumps_params={'ensure_ascii': False}, status = 200)
 
 
-@id_auth
 @method_decorator(csrf_exempt, name='dispatch')
 class UserInfoUpdateView(APIView):
+    @id_auth
     def get(self, request):
         user = request.user
         serializer = UserInfoUpdateSerializer(user)
         return Response(serializer.data)
+    @id_auth
     def put(self, request):
         user = request.user
         serializer = UserInfoUpdateSerializer(user, data=request.data)
