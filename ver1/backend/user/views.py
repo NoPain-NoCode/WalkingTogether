@@ -9,6 +9,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from rest_framework.parsers import JSONParser
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 from .models import User, SocialPlatform
 from .serializer import UserSerializer, UserInfoUpdateSerializer
@@ -130,3 +133,19 @@ class GoogleLoginView(View): #구글 로그인
                 'email'             : new_user_info.email
                 }
             return JsonResponse(response_data, json_dumps_params={'ensure_ascii': False}, status = 200)
+
+
+@id_auth
+@method_decorator(csrf_exempt, name='dispatch')
+class UserInfoUpdateView(APIView):
+    def get(self, request):
+        user = request.user
+        serializer = UserInfoUpdateSerializer(user)
+        return Response(serializer.data)
+    def put(self, request):
+        user = request.user
+        serializer = UserInfoUpdateSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
