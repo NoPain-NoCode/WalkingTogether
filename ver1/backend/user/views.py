@@ -19,6 +19,33 @@ def home(request):
     return render(request, 'home.html')
 
 
+# JWT 토큰 유효성 검사
+def id_auth(func):
+    
+    def wrapper(self, request, *args, **kwargs):
+        try:
+            access_token = request.headers.get('Authorization', None)
+            payload      = jwt.decode(access_token, my_settings.JWT_SECRET_KEY, my_settings.JWT_ALGORITHM)
+            user         = User.objects.get(email = payload["email"])
+            request.user = user
+
+            return func(self, request, *args, **kwargs)
+
+        except jwt.DecodeError:
+            return JsonResponse({'MESSAGE': 'INVALID_TOKEN'}, status=401)
+
+        except jwt.InvalidTokenError:
+            return JsonResponse({'MESSAGE': 'INVALID_ACCESS_TOKEN'}, status=401)
+
+        except jwt.ExpiredSignatureError:
+            return JsonResponse({'message': 'EXPIRED_TOKEN'}, status=401)
+
+        except User.DoesNotExist:
+            return JsonResponse({'MESSAGE': 'INVALID_USER'}, status=401)
+
+    return wrapper
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class KakaoLoginView(View): #카카오 로그인
     def get(self, request):
