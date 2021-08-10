@@ -23,16 +23,20 @@ def home(request):
 
 
 # JWT 토큰 유효성 검사
-def id_auth(func):
-    
-    def wrapper(self, request, *args, **kwargs):
+class id_auth:
+
+    def __init__(self, f):
+        self.func = f
+
+    def __call__(self, request, *args, **kwargs):
         try:
             access_token = request.headers.get('Authorization', None)
+            print(access_token)
             payload      = jwt.decode(access_token, my_settings.JWT_SECRET_KEY, my_settings.JWT_ALGORITHM)
             user         = User.objects.get(email = payload["email"])
             request.user = user
 
-            return func(self, request, *args, **kwargs)
+            self.func(request, *args, **kwargs)
 
         except jwt.DecodeError:
             return JsonResponse({'MESSAGE': 'INVALID_TOKEN'}, status=401)
@@ -45,8 +49,6 @@ def id_auth(func):
 
         except User.DoesNotExist:
             return JsonResponse({'MESSAGE': 'INVALID_USER'}, status=401)
-
-    return wrapper
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -141,7 +143,7 @@ class GoogleLoginView(View): #구글 로그인
 class UserInfoUpdateView(APIView):
 
     @id_auth
-    def get(self, request):
+    def get(request):
         user = request.user
         serializer = UserInfoUpdateSerializer(user)
         return Response(serializer.data)
