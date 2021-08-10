@@ -5,16 +5,16 @@ from django.views.generic.base import View
 from rest_auth.utils import jwt_encode
 import jwt
 import requests
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import serializers, status
 
-from .models import User, SocialPlatform
-from .serializer import UserSerializer, UserInfoUpdateSerializer
+from .models import User, SocialPlatform, Pet
+from .serializer import UserSerializer, UserInfoUpdateSerializer, PetSerializer
 import my_settings
 
 # Create your views here.
@@ -51,6 +51,7 @@ def id_auth(func):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class KakaoLoginView(View): #카카오 로그인
+
     def get(self, request):
         access_token = request.headers["Authorization"]
         headers      = ({"Authorization" : f"{access_token}"})
@@ -98,6 +99,7 @@ class KakaoLoginView(View): #카카오 로그인
 
 @method_decorator(csrf_exempt, name='dispatch')
 class GoogleLoginView(View): #구글 로그인
+
     def post(self, request):
         user = JSONParser().parse(request)
         print(user)
@@ -137,11 +139,13 @@ class GoogleLoginView(View): #구글 로그인
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UserInfoUpdateView(APIView):
+
     @id_auth
     def get(self, request):
         user = request.user
         serializer = UserInfoUpdateSerializer(user)
         return Response(serializer.data)
+
     @id_auth
     def put(self, request):
         user = request.user
@@ -150,3 +154,72 @@ class UserInfoUpdateView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class PetListView(APIView):
+
+    @id_auth
+    def get(self, request):
+        user = request.user
+        pets = Pet.objects.filter(owner=user.email)
+        serializer = PetSerializer(pets, many=True)
+        return Response(serializer.data)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class PetAddView(APIView):
+
+    @id_auth
+    def post(self, request, format=None):
+        user = request.user
+        serializer = PetSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.owner = user.email
+            serializer.save()
+            user.number_of_pet += 1
+            user.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class PetInfoUpdateView(APIView):
+
+    @id_auth
+    def get_object(self, pk):
+        try:
+            return Pet.objects.get(pk=pk)
+        except Pet.DoesNotExist:
+            raise Http404
+
+    @id_auth
+    def get(self, request, pk, format=None):
+        user = request.user
+        pet = self.get_object(pk)
+        serializer = PetSerializer(pet)
+        if pet.owner == user.email:
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
+
+    @id_auth
+    def put(self, request, pk, format=None):
+        user = request.user
+        pet = self.get_object(pk)
+        serializer = PetSerializer(pet, data=request.data)
+        if pet.owner == user.email:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
+
+    @id_auth
+    def delete(self, request, pk, format=None):
+        user = request.user
+        pet = self.get_object(pk)
+        serializer = PetSerializer(pet, data=request.data)
+        if pet.owner == user.email:
+            pet.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)

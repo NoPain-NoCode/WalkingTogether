@@ -4,7 +4,13 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class SocialPlatform(models.Model):
-    platform = models.CharField(max_length=20, default=0)
+    platform = models.CharField(
+        max_length=20,
+        default=0,
+        unique=True)
+
+    def __str__(self):
+        return self.platform
 
     class Meta:
         db_table = "social_platform"
@@ -111,3 +117,37 @@ class User(AbstractUser):
         db_table = 'user'
         verbose_name = '회원' 
         verbose_name_plural = '회원'  # 복수형 지정
+
+
+class Pet(models.Model):
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='주인 정보')
+    pet_name = models.CharField(
+        max_length=64,
+        verbose_name='이름')
+    GENDER_CHOICES = (
+		('male', '수컷'),
+		('female', '암컷')
+	)
+    gender = models.CharField(
+        blank=True,
+        null=True,
+        max_length=8,
+        choices=GENDER_CHOICES,
+        verbose_name='성별')
+    pet_image = models.ImageField(
+        verbose_name='프로필 사진',
+        null=True)
+    introducing_pet = models.TextField(
+        verbose_name='반려동물 소개',
+        null=True)
+
+    def __str__(self):
+        return self.pet_name
+
+    class Meta:
+        db_table = 'user_Pet'
+        verbose_name = '반려동물'
+        verbose_name_plural = '반려동물'
