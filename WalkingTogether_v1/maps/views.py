@@ -34,6 +34,8 @@ class ReadOnly(BasePermission):
         return request.method in SAFE_METHODS
 
 # 위경도로 범위 구해서 리턴하는 함수
+# @csrf_protect
+# @api_view(['GET'])
 @permission_classes([permissions.AllowAny,])
 def getBound(lat, lng):
     position = (lat, lng)
@@ -68,6 +70,7 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
         self.point = (37.4669357, 126.9478376)
     
     def get_queryset(self):
+        print("getqueryset 들어옴")
         try:
             # 현재 위치 정보 받아오기
             # longitude = float(request.GET.get('longitude',None))
@@ -88,6 +91,16 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
         return near_road
     
     def get(self, request, *args, **kwargs):
+        print("get")
+        try:
+            print("get 들어옴")
+            lng = request.GET.get('lng')
+            lat = request.GET.get('lat')
+            self.point = (lng,lat)
+            print("get성공")
+        except:
+            print("get안함")
+            pass
         return self.list(request, *args, **kwargs)
     
     def post(self, request, *args, **kwargs):
