@@ -149,7 +149,7 @@ class UserInfoUpdateView(APIView):
         return Response(serializer.data)
 
     @id_auth
-    def put(self, request):
+    def put(request):
         user = request.user
         serializer = UserInfoUpdateSerializer(user, data=request.data)
         if serializer.is_valid():
