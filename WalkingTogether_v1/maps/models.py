@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -23,27 +24,29 @@ class WalkingTrails(models.Model):
 class Review():
     id = models.IntegerField(primary_key=True,verbose_name="리뷰 id")
     point_id = models.ForeignKey(WalkingTrails,related_name="walkingtrails", on_delete=models.CASCADE, db_column='point_id', verbose_name="산책로 id")
-    # user_id = models.ForeignKey("User",related_name="user", on_delete=models.CASCADE, db_column='user_id', verbose_name="User id")
+    user_id = models.ForeignKey(User,related_name="user", on_delete=models.CASCADE, db_column='user_id', verbose_name="User id")
     content = models.TextField(null=True, verbose_name="내용")
     created_date = models.DateTimeField(auto_now_add=True, verbose_name="작성시간")
     updated_date = models.DateTimeField(auto_now=True, verbose_name="수정 시간")
     image = models.ImageField(null=True, verbose_name="이미지")
     
-    dog=(
-        ('가능'),
-        ('불가능'),
+    # 별점 선택지
+    REVIEW_POINT_CHOICES = (
+    ('1', 1),
+    ('2', 2),
+    ('3', 3),
+    ('4', 4),
+    ('5', 5),
     )
 
-    point = models.IntegerField(verbose_name="별점")
-    dog_possible = models.CharField(blank=True, null=True, choices=dog, verbose_name="강아지 산책 가능 여부")
+    # 강아지 산책 가능 여부
+    DOG_POSS=(
+    ('가능'),
+    ('불가능'),
+    )
 
-    # point = (
-    #     ('1',1),
-    #     ('2',2),
-    #     ('3',3),
-    #     ('4',4),
-    #     ('5',5),
-    # )
+    point = models.IntegerField(choices=REVIEW_POINT_CHOICES,verbose_name="별점")
+    dog_possible = models.CharField(blank=True, null=True, choices=DOG_POSS, verbose_name="강아지 산책 가능 여부")
 
 
     objects = models.Manager()
