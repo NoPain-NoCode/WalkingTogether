@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 from django.views.generic import TemplateView
+from rest_framework import views
 
 from maps.views import NearRoadView
 
@@ -25,4 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('rest_framework.urls')),
     path('api/near_walk',NearRoadView.as_view()),
+    # 리뷰 관련 뷰
+    # path('review/<int:id>/',views.detail)
 ]

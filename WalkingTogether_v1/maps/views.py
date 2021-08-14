@@ -1,9 +1,9 @@
-from re import I
+# from re import I
 from django.db.models.fields import json
-from django.http import request
+# from django.http import request
 from django.http.response import JsonResponse
-from django.shortcuts import render
-from django.db.models import Q, fields
+# from django.shortcuts import render
+from django.db.models import Q, fields, query
 from django.views.generic.base import View
 
 from django.contrib.auth.decorators import login_required
@@ -12,11 +12,12 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 
 # from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
+from rest_framework.views import APIView
 from rest_framework import permissions
 
 from django.views.decorators.csrf import csrf_protect
@@ -69,43 +70,8 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
     def __init__(self):
         self.point = (37.4669357, 126.9478376)
     
-    def get_queryset(self):
-        print("getqueryset 들어옴")
-        try:
-            # 현재 위치 정보 받아오기
-            # longitude = float(request.GET.get('longitude',None))
-            # latitude = float(request.GET.get('latitude',None))
-            point = self.point
-
-            latitude = point[0]
-            longitude = point[1]
-            
-            # 임시 위경도
-            # longitude = 126.9478376
-            # latitude = 37.4669357
-
-            near_road = getBound(latitude,longitude)
-        except:
-            near_road = WalkingTrails.objects.all()
-        
-        return near_road
-    
-    def get(self, request, *args, **kwargs):
-        print("get")
-        try:
-            print("get 들어옴")
-            lng = request.GET.get('lng')
-            lat = request.GET.get('lat')
-            self.point = (lng,lat)
-            print("get성공")
-        except:
-            print("get안함")
-            pass
-        return self.list(request, *args, **kwargs)
-    
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
-            print('post 들어옴')
             data = JSONParser().parse(request)
             latitude = data['lat']
             longitude = data['lng']
@@ -118,51 +84,71 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
                 
         return Response(serializer.data)
 
-
 # 리뷰 관련 뷰
-# class ReviewViewSet(viewsets.ModelViewSet):
-#     queryset = Review.objects.all()
-#     serializer_class = ReviewSerializer
+class ReviewListView(generics.ListAPIView):
 
-class ReviewView(View):
-
-    # 리뷰 작성
-    @login_required
-    def post(self, request):
-
-        try:
-            data = json.loads(request.body)
-            user = request.user
-
-            content = data.get('content', None)
-
-            post_point = data.get('post_point', None)
-
-            if not content and post_point:
-                return JsonResponse({'message':'KEY_ERROR'}, status=400)
-            
-            review = Review.objects.create(
-                content=content,
-                post_point=post_point,
-                user_id=user.id,
-            )
-        
-        except:
-            return
-    
     # 리뷰 조회
     def get(self, request):
+        road = request.road # 프론트로부터 어떤 길 페이지인지 받음
+        reviews = Review.objects.filter(point_id=road.point_id)
+        serializer = ReviewSerializer(reviews, many=True)
 
-        reviews = Review.objects.all()
+        return Response(serializer.data)
+        # 아니면 
+        # serializer_class = ReviewSerializer
 
-        result = []
-        for review in reviews:
-            review_info = {
-                'comment': review.content,
-                'point_id':review.point_id,
-                'create_date':review.create_date,
-            }
+class ReviewUpdateView(generics.RetrieveUpdateAPIView):
 
-            result.append(review_info)
+    @login_required
+    def post(self, request):
+        road = request.road
+        user = request.user
+        queryset = Review.objects.all()
+        serializer_class = ReviewSerializer
+
+class ReviewDeleteView(generics.RetrieveDestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+# class ReviewView(View):
+
+#     # 리뷰 작성
+#     @login_required
+#     def post(self, request):
+
+#         try:
+#             data = json.loads(request.body)
+#             user = request.user
+
+#             content = data.get('content', None)
+
+#             post_point = data.get('post_point', None)
+
+#             if not content and post_point:
+#                 return JsonResponse({'message':'KEY_ERROR'}, status=400)
+            
+#             review = Review.objects.create(
+#                 content=content,
+#                 post_point=post_point,
+#                 user_id=user.id,
+#             )
         
-        return JsonResponse({'message':'SUCCESS', 'comment':result},status=200)
+#         except:
+#             return
+    
+#     # 리뷰 조회
+#     def get(self, request):
+
+#         reviews = Review.objects.all()
+
+#         result = []
+#         for review in reviews:
+#             review_info = {
+#                 'comment': review.content,
+#                 'point_id':review.point_id,
+#                 'create_date':review.create_date,
+#             }
+
+#             result.append(review_info)
+        
+#         return JsonResponse({'message':'SUCCESS', 'comment':result},status=200)
