@@ -19,6 +19,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from rest_framework import permissions
+from rest_framework import status
 
 from django.views.decorators.csrf import csrf_protect
 
@@ -85,30 +86,74 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
         return Response(serializer.data)
 
 # 리뷰 관련 뷰
-class ReviewListView(generics.ListAPIView):
 
-    # 리뷰 조회
+# 리뷰 조회
+class ReviewListAPIView(APIView):
+    
     def get(self, request):
-        road = request.road # 프론트로부터 어떤 길 페이지인지 받음
-        reviews = Review.objects.filter(point_id=road.point_id)
+        reviews = Review.objects.all()
         serializer = ReviewSerializer(reviews, many=True)
+    
+    def post(self, request):
+        serializer = ReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
 
+# 리뷰 추가
+class ReviewAddAPIView(APIView):
+    @login_required
+    def get(self, request):
+        user = request.user
+        road = request.road
+        serializer = ReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# 리뷰 내용, 수정, 삭제
+class ReviewDetailAPIView(APIView):
+    def get_object(self, pk):
+        return get_object_or_404(Review, pk=pk)
+
+    def get(self, request, pk, format=None):
+        review = self.get_object(pk)
+        serializer = ReviewSerializer(review)
         return Response(serializer.data)
-        # 아니면 
-        # serializer_class = ReviewSerializer
-
-class ReviewUpdateView(generics.RetrieveUpdateAPIView):
+    
+    @login_required
+    def put(self, request, pk):
+        review = self.get_object(pk)
+        serializer = ReviewSerializer(review, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @login_required
-    def post(self, request):
-        road = request.road
-        user = request.user
-        queryset = Review.objects.all()
-        serializer_class = ReviewSerializer
+    def delete(self, request, pk):
+        review = self.get_object(pk)
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-class ReviewDeleteView(generics.RetrieveDestroyAPIView):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+
+# class ReviewListView(generics.ListAPIView):
+
+#     # 리뷰 조회
+#     def get(self, request):
+#         road = request.road # 프론트로부터 어떤 길 페이지인지 받음
+#         reviews = Review.objects.filter(point_id=road.point_id)
+#         serializer = ReviewSerializer(reviews, many=True)
+
+#         return Response(serializer.data)
+#         # 아니면 
+#         # serializer_class = ReviewSerializer
+
+# class ReviewDeleteView(generics.RetrieveDestroyAPIView):
+#     queryset = Review.objects.all()
+#     serializer_class = ReviewSerializer
 
 # class ReviewView(View):
 
