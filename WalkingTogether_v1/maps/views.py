@@ -23,7 +23,7 @@ from rest_framework import status
 
 from django.views.decorators.csrf import csrf_protect
 
-from .serializers import WalkingTrailsSerializer, ReviewSerializer, PointSerializer
+from .serializers import WalkingTrailsSerializer, ReviewSerializer, WalkingTrailsDetailSerializer,PointSerializer
 from .form import PostForm
 
 from haversine import haversine
@@ -71,6 +71,34 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
     def __init__(self):
         self.point = (37.4669357, 126.9478376)
     
+    def get_queryset(self):
+        print("getqueryset 들어옴")
+        try:
+            point = self.point
+            print(point)
+
+            latitude = point[0]
+            longitude = point[1]
+
+            near_road = getBound(latitude,longitude)
+        except:
+            near_road = WalkingTrails.objects.all()
+        
+        return near_road
+        
+    def get(self, request, *args, **kwargs):
+        print("get")
+        try:
+            print("get 들어옴")
+            lng = request.GET.get('lng')
+            lat = request.GET.get('lat')
+            self.point = (lng,lat)
+            print("get성공")
+        except:
+            print("get안함")
+            pass
+        return self.list(request, *args, **kwargs)
+    
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             data = JSONParser().parse(request)
@@ -83,6 +111,17 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
                 near_road = WalkingTrails.objects.all()
                 serializer = WalkingTrailsSerializer(near_road, many=True)
                 
+        return Response(serializer.data)
+
+# 세부 페이지 관련 뷰
+class RoadDetailView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, point_number):
+        point_no = point_number
+        road = get_object_or_404(WalkingTrails, point_number=point_no)
+        serializer = WalkingTrailsDetailSerializer(road)
+
         return Response(serializer.data)
 
 # 리뷰 관련 뷰
