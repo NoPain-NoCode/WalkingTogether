@@ -155,8 +155,10 @@ hr {
 
 .list-container {
 	width:fit-content;
-	height: 300px;
+	height: 500px;
 	overflow: scroll;
+	border-radius: 15px;
+	margin-left: 15px;
 }
 
 .list-container::-webkit-scrollbar{ display:none; }
@@ -173,9 +175,13 @@ hr {
 	background-color: var(--main-bg-color);
 	border-radius: 15px;
 	width: 260px;
-	margin: 0 0 10px 10px;
-
+	margin-bottom: 10px;
 }
+
+.box:nth-child(2n-1) {
+	margin-right: 10px;
+}
+
 .info {
 	text-align: left;
 	margin-right: auto;

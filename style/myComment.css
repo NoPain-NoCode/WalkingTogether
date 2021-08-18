@@ -120,7 +120,7 @@
 	flex-direction: column;
     background-color: var(--main-bg-color);
     padding-top: 20px;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 hr {
     width: 50%;
@@ -156,7 +156,15 @@ hr {
     color: rgb(157, 129, 76);
 }
 
+.list-container {
+	width:fit-content;
+	height: 500px;
+	overflow: scroll;
+	border-radius: 15px;
+	margin: 0 0 0 15px;
+}
 
+.list-container::-webkit-scrollbar{ display:none; }
 
 .list {
     display: grid;
@@ -168,25 +176,23 @@ hr {
 	background-color: var(--main-bg-color);
 	border-radius: 15px;
 	width: 260px;
-	margin: 0 0 10px 10px;
-
+	margin-bottom: 10px;
+}
+.box:nth-child(2n-1) {
+	margin-right: 10px;
 }
 .info {
 	text-align: left;
 	margin-right: auto;
 	
 }
-.path-name {
 
-}
+
 .path-address {
 	float: left;
 	margin: 20px;
 }
-.comment {
-    max-height: 100px;
-    overflow: hidden;
-}
+
 .editBtn {
 	float: right;
 	text-align: right;
@@ -200,3 +206,6 @@ hr {
 .heart-img {
 	width: 30px;
 }
+
+
+
