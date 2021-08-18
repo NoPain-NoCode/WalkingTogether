@@ -115,12 +115,14 @@
 
 
 
+/* 사이드바 */
 .sidebar {
 	display: flex;
 	flex-direction: column;
     background-color: var(--main-bg-color);
     padding-top: 20px;
-    border-radius: 15px;
+    border-radius: 20px;
+	height: fit-content;
 }
 hr {
     width: 50%;
@@ -132,10 +134,10 @@ hr {
     text-decoration-line: none;
     padding: 10px;
 }
-
-.menu :nth-child(1) {
-    color: blue;
+.menu:last-child {
+	margin-bottom: 20px;
 }
+
 
 .container2 {
 	display: grid;

@@ -7,7 +7,7 @@
     <meta name="description" content="캠핑장">
     <meta name="viewport">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../style/userInfoMod.css">
+    <link rel="stylesheet" href="../style/editPetInfo.css">
 </head>
 <body>
     <div class="main-container">
@@ -29,38 +29,37 @@
             </div>
 
             
-            <div class=container2>
+            <div class="edit-box">
                 
-                <div class="title">내 정보 수정</div>
-                <div class="content1">
-                    <div>프로필 이미지</div>
-                    <img class="profile userInfo" src="../img/icon/profile.png" alt="../img/icon/profile.png"/>
-                    <div>이메일</div>
-                    <input type="text" class="email userInfo" placeholder="abc@email.com">
-                    <div>별명</div>
-                    <div class="userName userInfo">ㅇㅇ님</div>
-                    <div>성별</div>
-                    <div class="radiobox">
+                <div class="title">반려동물 정보 수정</div>
+                <img class="profile" src="../img/icon/dog.png" alt="../img/icon/dog.png"/>
+
+                <div class="user-info-box">
+                    <h1>이름</h1>
+                    <div class="userName petInfo">강아지</div>
+
+                    <h1>성별</h1>
+                    <div class="radiobox petInfo">
                         <input type="radio" name="publicRadio" id="public">
-                        <label for="yes">남</label>
+                        <label for="yes">암</label>
                         <input type="radio" name="publicRadio" id="notPublic">
-                        <label for="yes">여</label>
+                        <label for="yes">수</label>
                     </div>
-                    <div>나이대</div>
-                    <div class="age userInfo">20대</div>
-                    <div>프로필 공개 여부</div>
-                    <div class="radiobox">
-                        <input type="radio" name="genderRadio" id="male">
-                        <label for="yes">공개</label>
-                        <input type="radio" name="genderRadio" id="female">
-                        <label for="yes">비공개</label>
+
+                    <h1>나이</h1>
+                    <div class="form-group petInfo-last">
+                        <select class="form-select" id="exampleSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
                     </div>
                     
-                
-                    
-                    <button class="btn">등록</button>
                 </div>
-                
+
+                <button class="btn">등록</button>
             
             </div>
 

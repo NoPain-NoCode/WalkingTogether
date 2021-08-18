@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>WannaWalk</title>
+    <meta name="author" content="WannaWalk">
+    <meta name="description" content="캠핑장">
+    <meta name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../style/editUserInfo.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="container">
+
+            <div class="h-container">
+                <div class="h-container-left">
+                    <button class="logoBtn"><img src="../img/icon/logo.png" id="logoBtnImg"></button><b>산책갈까?</b>
+                </div>
+                <div class="h-container-right">
+                    <div class="s-container">
+                        <input class="searchBox" type="text" placeholder="산책로 검색하기">
+                        <button class="searchBtn"><img src="../img/searchBtn.png" id="searchBtnImg"></button>
+                    </div>
+                    <div class="user-container">
+                        <b class="loginBtn">로그인</b><button class="mypageBtn"><img src="../img/icon/user.png" id="mypageBtnImg"></button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="edit-box">
+                
+                <div class="title">내 정보 수정</div>
+                <img class="profile userInfo" src="../img/icon/profile.png" alt="../img/icon/profile.png"/>
+
+                <div class="user-info-box">
+                    
+                    <h1>이메일</h1>
+                    <input type="text" class="user-email userInfo-first" placeholder="abcdd@email.com">
+
+                    <h1>별명</h1>
+                    <div class="userName userInfo">ㅇㅇ님</div>
+
+                    <h1>성별</h1>
+                    <div class="radiobox userInfo">
+                        <input type="radio" name="publicRadio" id="public">
+                        <label for="yes">남</label>
+                        <input type="radio" name="publicRadio" id="notPublic">
+                        <label for="yes">여</label>
+                    </div>
+
+                    <h1>나이대</h1>
+                    <div class="form-group userInfo-first">
+                        <select class="form-select" id="exampleSelect1">
+                            <option>10대</option>
+                            <option>20대</option>
+                            <option>30대</option>
+                            <option>40대</option>
+                            <option>50대</option>
+                            <option>60대</option>
+                            <option>70대</option>
+                            <option>80대</option>
+                            <option>90대</option>
+                        </select>
+                    </div>
+
+                    <h1>프로필 공개 여부</h1>
+                    <div class="radiobox userInfo">
+                        <input type="radio" name="genderRadio" id="male">
+                        <label for="yes">공개</label>
+                        <input type="radio" name="genderRadio" id="female">
+                        <label for="yes">비공개</label>
+                    </div>
+                    
+                </div>
+
+                <button class="btn">등록</button>
+            
+            </div>
+
+        </div>
+    </div> 
+
+</body>
+</html>

@@ -112,12 +112,11 @@
 	vertical-align: middle;
 }
 
-
-
-.container2 {
-    margin: 20px;
+/* 회원정보 수정 박스 */
+.edit-box {
+    margin-top: 80px;
     padding: 20px;
-    border: .1px solid rgb(219, 219, 219);
+    /* border: 1px solid rgb(205, 205, 205); */
     border-radius: 20px;
     width: 400px;
     
@@ -125,19 +124,66 @@
     left: 50%;
     top: 300px;
     transform: translate(-50%, -50%);
+
+	box-shadow: 0 0 5px 5px rgb(243, 243, 243);
 }
 
 .title {
 	margin: 15px;
 }
 
-.content1 {
+/* 회원정보 그리드 정렬 */
+.user-info-box{
     display: grid;
     grid-template-columns: 1fr 2fr;
+	justify-content: center;
+	margin: 20px 0;
+}
+
+h1 {
+	font-family: 'Jua', sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	text-align: left;
+	margin-left: 15px;
+}
+
+/* 그리드 셀 각각 정렬 */
+.userInfo-first {
+	justify-content: center;
+	display: inline-block;
+	margin-top: 8px;
+	margin-left: 35px;
+	margin-right: 5px;
+	text-align: left;
 }
 
 .userInfo {
-    margin: 5px;
+	justify-content: center;
+	display: inline-block;
+	margin-top: 12px;
+	margin-left: 35px;
+	margin-right: 5px;
+	text-align: left;
+}
+
+/* 이메일 칸 */
+.user-email {
+	border-radius: 6px;
+    box-shadow: 0 2px 5px 2px rgb(64 60 67 / 16%) inset;
+	/* margin: 20px 10px 10px 10px;
+	padding: 10px 15px; */
+	height: 30px;
+	/* width: 100%; */
+	flex-grow: 2;
+	border: none;
+	outline: none;
+	padding-left: 8px;
+}
+
+.user-email:focus {
+	border: none;
+	outline: none;
 }
 
 .btn {
@@ -153,8 +199,7 @@
     color: rgb(157, 129, 76);
 }
 
-input[type="radio"]:checked {
-  }
+
 
 input:checked + label {
 color: rgb(162, 138, 32);
@@ -169,4 +214,38 @@ color: rgb(162, 138, 32);
 	height: 30px;
 	/* width: 100%; */
 	flex-grow: 2;
+}
+
+
+
+/* 드롭다운 메뉴 */
+.form-select {
+    display: block;
+    width: 50%;
+    padding: 5px;
+    -moz-padding-start: calc(0.75rem - 3px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    font-family: "Jua";
+}
+
+.form-select:focus {
+    outline: none;
+}
+
+option {
+    font-weight: normal;
+    display: block;
+    white-space: nowrap;
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
 }
