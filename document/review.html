@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>WannaWalk</title>
+    <meta name="author" content="WannaWalk">
+    <meta name="description" content="캠핑장">
+    <meta name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css"> <!--css 기본설정 초기화-->
+   
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="../style/bootstrap.min.css" />
+    <link rel="stylesheet" href="../style/review.css"> <!--css 연결-->
+</head>
+<body>
+    <div class="wrap">
+        <li>
+            <div class="container">
+                <form name="myform" id="myform" method="post" action="./save">
+                    <fieldset>
+                        <h1>별점</h1>
+                        <input type="radio" name="rating" value="5" id="rate1"><label for="rate1">⭐</label>
+                        <input type="radio" name="rating" value="4" id="rate2"><label for="rate2">⭐</label>
+                        <input type="radio" name="rating" value="3" id="rate3"><label for="rate3">⭐</label>
+                        <input type="radio" name="rating" value="2" id="rate4"><label for="rate4">⭐</label>
+                        <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="container">
+                <h2>강아지 산책 가능 여부</h2>
+                <label class="box-radio-input">
+                    <input type="radio" name="cp_item" value="옵션1">
+                    <span>가능</span>
+                </label>
+                <label class="box-radio-input">
+                    <input type="radio" name="cp_item" value="옵션2">
+                    <span>불가능</span>
+                </label>
+                <label class="box-radio-input">
+                    <input type="radio" name="cp_item" value="옵션2">
+                    <span>모르겠어요</span>
+                </label>
+            </div>
+            <div class="container">
+                <h2>리뷰</h2>
+                
+
+
+                <section class="reply-form">
+                    <form action="return false;">
+                        <div>
+                            <textarea placeholder="후기를 입력해주세요"></textarea>
+                        </div>
+                        <input type="submit">
+
+                    </form>
+                    
+                </section>
+                
+            </div>
+
+        </li>
+        
+    </div>
+</body>
+    <script src="./js/script.js"></script>
+</html>

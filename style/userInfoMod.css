@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 :root {
-	--main-bg-color: #f5e0a7;
+	--main-bg-color: #fbecc3;
 	margin: 0;
 	padding: 0;
 }
@@ -113,77 +113,60 @@
 }
 
 
-/*지도와 산책로 리스트 병렬*/
-.map-List {
-	display: flex;
+
+.container2 {
+    margin: 20px;
+    padding: 20px;
+    border: .1px solid rgb(219, 219, 219);
+    border-radius: 20px;
+    width: 400px;
+    
+    position: absolute;
+    left: 50%;
+    top: 300px;
+    transform: translate(-50%, -50%);
 }
 
-/* 정보 */
-.map {
-	padding: 0;
-	margin: 0 10px 0 0;
-}
-.info {
-	width: 330px;
-	height: 330px;
-	padding: 30px;
-	box-shadow: 0 0 10px 5px rgb(229, 229, 229) inset;
-	border-radius: 30px;
-	text-align: left;
-}
-.Img {
-	width: 390x;
-  	height: 395px;
-  	object-fit: cover;
-	border-radius: 30px;
+.title {
+	margin: 15px;
 }
 
-.review-container {
-	width:800px;
-	text-align: left;
+.content1 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
 }
 
-.review-count {
-	padding: 30px 0 15px 0;
-	font-size: 20px;
+.userInfo {
+    margin: 5px;
 }
 
-.comments {
-	border-bottom: 0.1px solid rgb(197, 197, 197);
-	display: flex;
-	padding: 15px 0;
+.btn {
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Jua', sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: var(--main-bg-color);
+    color: rgb(157, 129, 76);
 }
 
-.user-image {
-	border-radius: 15px;
-	width: 200px;
-	height: 200px;
-	font-size: 21px;
+input[type="radio"]:checked {
+  }
+
+input:checked + label {
+color: rgb(162, 138, 32);
 }
 
-.cmt-right {
-	padding: 15px;
-	display: flex;
-	flex-direction: column;
+.email {
+	border-radius: 6px;
+	border: 2px solid var(--main-bg-color);
+    box-shadow: 0 2px 5px 2px rgb(64 60 67 / 16%) inset;
+	/* margin: 20px 10px 10px 10px;
+	padding: 10px 15px; */
+	height: 30px;
+	/* width: 100%; */
+	flex-grow: 2;
 }
-
-.cmt-left {
-	display: flex;
-	text-align: left;
-}
-
-.grade {
-	padding: 10px 0;
-}
-
-.time {
-}
-
-
-/* 폰트 적용 */
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-
-html {
-    font-family: "Noto Sans KR", sans-serif;
-}
-
