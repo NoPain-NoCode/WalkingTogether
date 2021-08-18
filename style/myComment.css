@@ -139,7 +139,7 @@ hr {
 
 .container2 {
 	display: grid;
-	grid-template-columns: 200px 300px 300px;
+	grid-template-columns: 200px 630px;
     margin-top: 20px;
 }
 
@@ -168,18 +168,13 @@ hr {
 
 .list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
 }
 
 .box {
 	padding: 20px;
 	background-color: var(--main-bg-color);
 	border-radius: 15px;
-	width: 260px;
 	margin-bottom: 10px;
-}
-.box:nth-child(2n-1) {
-	margin-right: 10px;
 }
 .info {
 	text-align: left;
@@ -198,10 +193,12 @@ hr {
 	text-align: right;
     background-color: white;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 4px 8px;
+	margin-top: 5px;
     border: 1px solid #717171;
     cursor: pointer;
     color: #717171;
+	font-size: 16px;
 }
 .heart-img {
 	width: 30px;
