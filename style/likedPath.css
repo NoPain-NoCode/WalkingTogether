@@ -153,6 +153,14 @@ hr {
 }
 
 
+.list-container {
+	width:fit-content;
+	height: 300px;
+	overflow: scroll;
+}
+
+.list-container::-webkit-scrollbar{ display:none; }
+
 
 .list {
     display: grid;

@@ -198,6 +198,15 @@
 }
 
 
+
+.list-container {
+	width:fit-content;
+	height: 500px;
+	overflow: scroll;
+}
+
+.list-container::-webkit-scrollbar{ display:none; }
+
 /* 하단메뉴
 .fixedBar {
 	position: fixed;
