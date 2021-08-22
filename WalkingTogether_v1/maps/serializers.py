@@ -1,11 +1,14 @@
+from django.db.models import fields
 from rest_framework import serializers
-
 from .models import WalkingTrails, Review
+
+BASE_URL = "http://203.237.169.237:8001/"
 
 class PointSerializer(serializers.ModelSerializer):
     class Meta:
         model = WalkingTrails
         fields = ('latitude', 'longitude')
+
 class WalkingTrailsSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -31,8 +34,10 @@ class WalkingTrailsDetailSerializer(serializers.ModelSerializer):
         fields = ('category','region','distance','time_required','_level','subway','Transportation',
                     'course_name','course_detail','_explain','point_number','point_name',
                     'longitude','latitude','point_list')
+    
+    
 
-class ReviewSerializer(serializers.HyperlinkedModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ('walkingtrails', 'id', 'user', 'content', 'created_date', 'updated_date', 'point', 'dog_possible')
