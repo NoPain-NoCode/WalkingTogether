@@ -1,15 +1,11 @@
-# from re import I
-from django.db.models.fields import json
-# from django.http import request
-from django.http.response import JsonResponse
-# from django.shortcuts import render
-from django.db.models import Q, fields, query
-from django.views.generic.base import View
+from django.conf import UserSettingsHolder
+from django.db.models import Q
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User, Permission
-from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
+
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 # from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework import generics, mixins, serializers
@@ -23,21 +19,24 @@ from rest_framework import status
 
 from django.views.decorators.csrf import csrf_protect
 
-from .serializers import WalkingTrailsSerializer, ReviewSerializer, WalkingTrailsDetailSerializer,PointSerializer
+from .serializers import WalkingTrailsDetailSerializer, WalkingTrailsSerializer, PointSerializer, ReviewSerializer
 from .form import PostForm
 
 from haversine import haversine
-from decimal import Decimal
+from decimal import Context, Decimal
+import uuid
 
 from .models import WalkingTrails, Review
+
+# JWT 토큰 유효성 검사 클래스 불러오기
+from user.views import id_auth
+
 
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         return request.method in SAFE_METHODS
 
 # 위경도로 범위 구해서 리턴하는 함수
-# @csrf_protect
-# @api_view(['GET'])
 @permission_classes([permissions.AllowAny,])
 def getBound(lat, lng):
     position = (lat, lng)
@@ -64,9 +63,11 @@ def getBound(lat, lng):
 
 
 # Create your views here.
+@method_decorator(csrf_exempt, name='dispatch')
 class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
-    serializer_class = WalkingTrailsSerializer
+    # permission_classes = [IsAuthenticated|ReadOnly]
     permission_classes = (permissions.AllowAny,)
+    serializer_class = WalkingTrailsSerializer
 
     def __init__(self):
         self.point = (37.4669357, 126.9478376)
@@ -101,6 +102,7 @@ class NearRoadView(generics.GenericAPIView, mixins.ListModelMixin):
     
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
+            print('post 들어옴')
             data = JSONParser().parse(request)
             latitude = data['lat']
             longitude = data['lng']
@@ -125,114 +127,65 @@ class RoadDetailView(APIView):
         return Response(serializer.data)
 
 # 리뷰 관련 뷰
-
 # 리뷰 조회
+@method_decorator(csrf_exempt, name='dispatch')
 class ReviewListAPIView(APIView):
     
-    def get(self, request):
-        reviews = Review.objects.all()
-        serializer = ReviewSerializer(reviews, many=True)
-    
-    def post(self, request):
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+    def get(self, request, point_number):
+        reviews = Review.objects.filter(walkingtrails=point_number)
+        serializer = ReviewSerializer(reviews, many=True, context={'request':request})
+        return Response(serializer.data)
 
-# 리뷰 추가
+# 리뷰 작성
+@method_decorator(csrf_exempt, name='dispatch')
 class ReviewAddAPIView(APIView):
-    @login_required
-    def get(self, request):
+
+    @id_auth
+    def post(request, point_number,format=None):
         user = request.user
-        road = request.road
-        serializer = ReviewSerializer(data=request.data)
+        road = WalkingTrails.objects.get(point_number=point_number)
+        serializer = ReviewSerializer(data=request.data, context={'request':request})
         if serializer.is_valid():
-            serializer.save()
+            serializer.user = user.email
+            serializer.walkingtrails = road.point_number
+            serializer.save(user=user, walkingtrails=road)
+            # road.count_review += 1
+            # road.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# 리뷰 내용, 수정, 삭제
+# 하나의 리뷰 내용, 수정, 삭제
+@method_decorator(csrf_exempt, name='dispatch')
 class ReviewDetailAPIView(APIView):
-    def get_object(self, pk):
-        return get_object_or_404(Review, pk=pk)
 
     def get(self, request, pk, format=None):
-        review = self.get_object(pk)
+        review = Review.objects.get(id=pk)
         serializer = ReviewSerializer(review)
         return Response(serializer.data)
     
-    @login_required
-    def put(self, request, pk):
-        review = self.get_object(pk)
+    @id_auth
+    def put(request, pk):
+        # review = Review.objects.filter(id=pk)
+        user = request.user
+        review = Review.objects.get(id=pk)
         serializer = ReviewSerializer(review, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+        if serializer.is_valid():    
+            if str(review.user) == str(user.email):
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @login_required
-    def delete(self, request, pk):
-        review = self.get_object(pk)
-        review.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-# class ReviewListView(generics.ListAPIView):
-
-#     # 리뷰 조회
-#     def get(self, request):
-#         road = request.road # 프론트로부터 어떤 길 페이지인지 받음
-#         reviews = Review.objects.filter(point_id=road.point_id)
-#         serializer = ReviewSerializer(reviews, many=True)
-
-#         return Response(serializer.data)
-#         # 아니면 
-#         # serializer_class = ReviewSerializer
-
-# class ReviewDeleteView(generics.RetrieveDestroyAPIView):
-#     queryset = Review.objects.all()
-#     serializer_class = ReviewSerializer
-
-# class ReviewView(View):
-
-#     # 리뷰 작성
-#     @login_required
-#     def post(self, request):
-
-#         try:
-#             data = json.loads(request.body)
-#             user = request.user
-
-#             content = data.get('content', None)
-
-#             post_point = data.get('post_point', None)
-
-#             if not content and post_point:
-#                 return JsonResponse({'message':'KEY_ERROR'}, status=400)
-            
-#             review = Review.objects.create(
-#                 content=content,
-#                 post_point=post_point,
-#                 user_id=user.id,
-#             )
-        
-#         except:
-#             return
-    
-#     # 리뷰 조회
-#     def get(self, request):
-
-#         reviews = Review.objects.all()
-
-#         result = []
-#         for review in reviews:
-#             review_info = {
-#                 'comment': review.content,
-#                 'point_id':review.point_id,
-#                 'create_date':review.create_date,
-#             }
-
-#             result.append(review_info)
-        
-#         return JsonResponse({'message':'SUCCESS', 'comment':result},status=200)
+    @id_auth
+    def delete(request, pk):
+        user = request.user
+        review = Review.objects.get(id=pk)
+        serializer = ReviewSerializer(review, data=request.data)
+        if serializer.is_valid(): 
+            if str(review.user) == str(user.email):
+                review.delete()
+                # road.count_review -= 1
+                # road.save()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
