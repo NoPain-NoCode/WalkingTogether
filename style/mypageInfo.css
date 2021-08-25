@@ -141,6 +141,9 @@ hr {
 .menu:last-child {
 	margin-bottom: 20px;
 }
+.menu:nth-child(1) {
+	color: rgb(157, 129, 76);
+}
 
 /* 유저 정보 */
 .my-info {
