@@ -240,7 +240,7 @@ h2 {
 }
 
 .cmt-left {
-	display: flex;
+	/* display: flex; */
 	text-align: left;
 }
 
