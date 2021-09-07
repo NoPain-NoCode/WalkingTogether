@@ -136,6 +136,17 @@ class ReviewListAPIView(APIView):
         serializer = ReviewSerializer(reviews, many=True, context={'request':request})
         return Response(serializer.data)
 
+# 유저가 작성한 리뷰 조회
+@method_decorator(csrf_exempt, name='dispatch')
+class UserReviewListAPIView(APIView):
+    
+    @id_auth
+    def get(request):
+        user = request.user
+        reviews = Review.objects.filter(user=user)
+        serializer = ReviewSerializer(reviews, many=True, context={'request':request})
+        return Response(serializer.data)
+
 # 리뷰 작성
 @method_decorator(csrf_exempt, name='dispatch')
 class ReviewAddAPIView(APIView):
@@ -189,3 +200,4 @@ class ReviewDetailAPIView(APIView):
                 return Response(status=status.HTTP_204_NO_CONTENT)
             return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

@@ -20,6 +20,12 @@ class WalkingTrails(models.Model):
     latitude  = models.DecimalField(decimal_places=14,max_digits=16,verbose_name='위도')
     
     # count_review = models.IntegerField(default=0, verbose_name="리뷰 개수")
+    
+    def longitude_float(self):
+        return float(self.longitude)
+    
+    def latitude_float(self):
+        return float(self.latitude)
 
     def __str__(self):
         return str(self.point_number)
