@@ -1,6 +1,5 @@
 from django.db import models
-# from django.contrib.auth.models import User
-# from user.models import User
+from .utils import WalkingTrailsIndex, ReviewIndex
 
 # Create your models here.
 class WalkingTrails(models.Model):
@@ -29,6 +28,27 @@ class WalkingTrails(models.Model):
 
     def __str__(self):
         return str(self.point_number)
+    
+    def indexing(self):
+        obj = WalkingTrailsIndex(
+        meta={'id': self.point_number},
+        category=self.category,
+        region=self.region,
+        distance=self.distance,
+        time_required=self.time_required,
+        _level=self._level,
+        subway=self.subway,
+        transportation=self.Transportation,
+        course_name=self.course_name,
+        course_detail=self.course_detail,
+        _explain=self._explain,
+        point_number=self.point_number,
+        point_name=self.point_name,
+        longitude=self.longitude,
+        latitude=self.latitude,
+        )
+        obj.save()
+        return obj.to_dict(include_meta=True)
 
     class Meta:
         managed = False
@@ -71,6 +91,22 @@ class Review(models.Model):
     def __str__(self):
         return str(self.id)
     
+    def indexing(self):
+        obj = ReviewIndex(
+        meta={'id': self.id},
+        walkingtrails=self.walkingtrails,
+        user=self.user,
+        content=self.content,
+        point=self.point,
+        dog_possible=self.dog_possible,
+        )
+        if obj.walkingtrails:
+            obj.walkingtrails = obj.walkingtrails.point_name
+        if obj.user:
+            obj.user = obj.user.nickname
+        obj.save()
+        return obj.to_dict(include_meta=True)
+
     class Meta:
         db_table = 'review'
         verbose_name = 'review'

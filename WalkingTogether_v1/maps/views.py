@@ -1,16 +1,15 @@
-from django.conf import UserSettingsHolder
 from django.db.models import Q
 
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from elasticsearch_dsl import query
 
 # from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework import generics, mixins, serializers
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
@@ -20,17 +19,19 @@ from rest_framework import status
 from django.views.decorators.csrf import csrf_protect
 
 from .serializers import WalkingTrailsDetailSerializer, WalkingTrailsSerializer, PointSerializer, ReviewSerializer
-from .form import PostForm
 
 from haversine import haversine
-from decimal import Context, Decimal
-import uuid
+from decimal import Decimal
 
 from .models import WalkingTrails, Review
 
 # JWT 토큰 유효성 검사 클래스 불러오기
 from user.views import id_auth
 
+# 검색기능 관련
+from elasticsearch import Elasticsearch
+from elasticsearch_dsl import MultiSearch, Search
+from elasticsearch_dsl.query import MultiMatch
 
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
@@ -200,4 +201,73 @@ class ReviewDetailAPIView(APIView):
                 return Response(status=status.HTTP_204_NO_CONTENT)
             return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# 검색 관련
+# ES에 보내기 위한 JSON 데이터
+@method_decorator(csrf_exempt, name='dispatch')
+class RoadDataView(generics.GenericAPIView, mixins.ListModelMixin):
+    # permission_classes = [IsAuthenticated|ReadOnly]
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = WalkingTrailsSerializer
+    
+    def get_queryset(self):
+        print("getqueryset 들어옴")
+        near_road = WalkingTrails.objects.all()
+        serializer = WalkingTrailsSerializer(near_road, many=True)
+        return Response(serializer.data)
+        
+    def get(self, request, *args, **kwargs):
+        print("get")
+        near_road = WalkingTrails.objects.all() 
+        serializer = WalkingTrailsSerializer(near_road, many=True)
+        return Response(serializer.data)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class RoadSearchView(APIView):
+
+    def get(self, request):
+        es = Elasticsearch([{'host':'203.237.169.237', 'port':'9200'}])
+        # 검색어
+        search_word = request.GET.get('search')
+
+        if not search_word:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'search word param is missing'})
+        
+        m = MultiMatch(query=search_word, fields=['region'])
+        s = Search(using=es, index='walkingtrails-index').query(m)[:10000]
+        res = s.execute()
+        data_list = []
+        for data in res:
+            data_list.append(data.to_dict())
+        return Response(data_list)
+    
+    def post(self, request):
+        es = Elasticsearch([{'host':'203.237.169.237', 'port':'9200'}])
+        req = JSONParser().parse(request)
+        data = req['search']
+        if not data:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'search word param is missing'})
+        
+        # 검색어 전처리
+
+
+        # 쿼리별 search
+
+        data_list = []
+        m = MultiMatch(query=data, fields=['region'])
+        # s = Search(using=es, index='walkingtrails-index').query(m)
+        s = Search(using=es, index='walkingtrails-index').query(
+            'multi_match',
+            query=data,
+            fuzziness='auto',
+            fields=['region']
+        )[:10000]
+
+        res = s.execute()
+        for data in res:
+            data_list.append(data.to_dict())
+
+
+        return Response(data_list)
 
