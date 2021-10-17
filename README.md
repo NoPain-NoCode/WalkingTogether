@@ -42,14 +42,14 @@ https://www.wannawalk.co.kr:3001/
 
 ### 구현화면
 #### 메인화면
-![mainscreen](docs/img/screen_1.png)
+![mainscreen](docs/img/screen_1.PNG)
 
 #### 로그인
 #### 마이페이지
 
 #### 산책로 세부 정보 
-![mapinfo1](docs/img/scrren_2.png)
-![mapinfo2](docs/img/scrren_3.png)
+![mapinfo1](docs/img/screen_2.PNG)
+![mapinfo2](docs/img/screen_3.PNG)
 #### 리뷰 작성 
 #### 쪽지보내기
 
