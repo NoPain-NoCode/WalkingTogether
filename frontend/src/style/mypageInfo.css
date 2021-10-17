@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+:root {
+	--main-bg-color: #fbecc3;
+	margin: 0;
+	padding: 0;
+}
+
+.main-container {
+	/* margin: 0 auto; */
+	text-align: center;
+	font-family: 'Jua', sans-serif;
+}
+.container {
+	display: inline-block;
+}
+
+
+
+/* 유저 */
+.user-container {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-grow: 1;
+}
+
+.loginBtn:hover {
+	cursor: pointer;
+}
+
+/* 유저 아이콘 */
+.mypageBtn {
+	outline: none;
+	border: 0;
+	background: transparent;
+	/* line-height: 80px; */
+	justify-content: flex-end;
+}
+#mypageBtnImg {
+	width: 20px;
+	vertical-align: middle;
+}
+
+/* 사이드바 그리드 */
+.container2 {
+	display: grid;
+	grid-template-columns: 200px 630px;
+	margin-top: 20px;
+}
+
+/* 사이드바 */
+.sidebar {
+	display: flex;
+	flex-direction: column;
+    background-color: var(--main-bg-color);
+    padding-top: 20px;
+    border-radius: 20px;
+	height: fit-content;
+}
+hr {
+    width: 50%;
+    border: 0.01px solid rgb(205, 181, 136);
+}
+.menu {
+	display: block;
+    color: black;
+    text-decoration-line: none;
+    padding: 10px;
+}
+.menu:last-child {
+	margin-bottom: 20px;
+}
+
+/* 유저 정보 */
+.my-info {
+	margin-top: 5px
+}
+
+.btn {
+    width: 150px;
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Jua', sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: var(--main-bg-color);
+    color: rgb(157, 129, 76);
+}
+
+.logoutBtn {
+	width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Jua', sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: white;
+    color: rgb(157, 129, 76);
+}

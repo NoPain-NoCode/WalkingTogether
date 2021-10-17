@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+    background-color: var(--main-bg-color);
+	margin-top: 10px;
+    padding-top: 20px;
+    border-radius: 20px;
+	height: fit-content;
+}
+hr {
+    width: 50%;
+    border: 0.01px solid rgb(205, 181, 136);
+}
+.menu {
+	display: block;
+    color: black;
+    text-decoration-line: none;
+    padding: 10px;
+    height: 30px;
+    text-align: center;
+}
+.menu:last-child {
+	margin-bottom: 20px;
+}

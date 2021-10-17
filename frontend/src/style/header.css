@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+:root {
+	--main-bg-color: #f5e0a7;
+	margin: 0;
+	padding: 0;
+}
+
+.main-container {
+	/* margin: 0 auto; */
+	text-align: center;
+	font-family: 'Jua', sans-serif;
+}
+.container {
+	display: inline-block;
+	
+}
+
+/* 헤더 */
+.h-container {
+	display: flex;
+	align-items: center;
+	margin: 20px 10px 10px 10px;
+}
+
+/* 헤더 왼쪽 */
+.h-container-left {
+	width: 480px;
+	display: flex;
+	align-items: center;
+	/* margin: 0 20px 0 0; */
+}
+
+/* 로고 */
+.logoBtn {
+	outline: none;
+	border: 0;
+	background: transparent;
+	justify-content: flex-end;
+	
+}
+#logoBtnImg {
+	width: 50px;
+}
+
+/* 헤더 오른쪽 */
+.h-container-right {
+	width: 400px;
+	display: flex;
+	align-items: center;
+}
+
+/* 검색바 */
+.s-container {
+	border-radius: 6px;
+	border: 2px solid var(--main-bg-color);
+    box-shadow: 0 2px 5px 2px rgb(64 60 67 / 16%) inset;
+	/* margin: 20px 10px 10px 10px;
+	padding: 10px 15px; */
+	height: 30px;
+	/* width: 100%; */
+	flex-grow: 2;
+}
+.s-container .searchBox {
+	font-family: 'Jua', sans-serif;
+	font-size: 15px;
+	border: transparent;
+	float: left;
+	/* margin-left: 6px; */
+	/* margin-top: 4px; */
+	line-height: 21px;
+	padding: 6px 0 0 6px;
+	background: transparent;
+	width: auto;
+	
+}
+.s-container .searchBox:focus {
+	outline: none;
+}
+.s-container .searchBtn {
+	width: 20px;
+	height: 20px;
+	border: 0px;
+	background: none;
+	outline: none;
+	float: right;
+	margin: 5px 10px 0 0;
+	cursor: pointer;
+}
+#searchBtnImg {
+	width: 10px;
+}
+
+.user-container {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-grow: 1;
+}
+
+.loginBtn:hover {
+	cursor: pointer;
+}
+
+/* 유저 아이콘 */
+.mypageBtn {
+	outline: none;
+	border: 0;
+	background: transparent;
+	/* line-height: 80px; */
+	justify-content: flex-end;
+}
+#mypageBtnImg {
+	width: 20px;
+	vertical-align: middle;
+}
+
+.infoIcon{
+	width: 20px;
+	height: 20px;
+	padding-right: 8px;
+	cursor: pointer;
+}
+
+.arrow_box {
+	display: none;
+	position: absolute;
+	width: 200px;
+	padding: 8px;
+	left: 700px;
+	top:60px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	background: #333;
+	color: #fff;
+	font-size: 14px;
+  }
+  
+  .arrow_box:after {
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	margin-left: -10px;
+	border: solid transparent;
+	border-color: rgba(51, 51, 51, 0);
+	border-bottom-color: #333;
+	border-width: 10px;
+	pointer-events: none;
+	content: ' ';
+  }
+
+.searchBox:hover + p.arrow_box {
+	display: block;
+}

@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+:root {
+	--main-bg-color: #f5e0a7;
+	margin: 0;
+	padding: 0;
+}
+
+.main-container {
+	/* margin: 0 auto; */
+	text-align: center;
+	font-family: 'Jua', sans-serif;
+}
+.container {
+	display: inline-block;
+}
+.container3{
+	width: 350px;
+	height: 500px;
+	margin: 0 auto;
+	overflow:scroll;
+}
+.container3::-webkit-scrollbar{ display:none; }
+
+
+
+/* 주변 산책로/강아지 찾기 */
+.btn-container {
+	display: flex;
+    align-items: center;
+	margin: 7px;
+}
+.btn-container .WDBtn {
+	background-color: var(--main-bg-color);
+	border: none;
+	border-radius: 5px;
+	height: 20px;
+	padding: 10px 5px;
+	margin: auto 3px;
+
+	color: black;
+	text-decoration: none;
+	font-size: 15px;
+	/* text-align: center; */
+	/* line-height: 15px; */
+
+	display: flex;
+	align-items: center;
+
+}
+.btn-container .WDBtn:active {
+	background-color: var(--main-bg-color);
+}
+.btn-container .WDBtn .WDBtnImg {
+	height: 20px;
+	width: 20px;
+
+	margin: 3px 5px;
+}
+.btn-container .WDBtn .WDBtnImg b{
+	display: contents;
+	/* text-align: center;
+	margin-bottom: 20px; */
+}
+
+/*지도와 산책로 리스트 병렬*/
+.map-List {
+	display: flex;
+
+}
+
+
+/* 지도 */
+.map-container {
+	margin: 0 10px;
+	border-radius: 15px;
+	overflow: hidden;
+}
+.mapImg {
+	width: 500px;
+  	height: 500px;
+  	object-fit: cover;
+}
+
+.box {
+	display: flex;
+	padding: 20px;
+	background-color: var(--main-bg-color);
+	border-radius: 15px;
+	width: 300px;
+	height: 60px;
+	margin: 0 0 10px 0;
+}
+.info {
+	text-align: left;
+	margin-right: auto;
+	
+}
+.path-name {
+
+}
+.path-address {
+	float: left;
+	margin: 20px;
+}
+.heart {
+	float: right;
+	text-align: right;
+}
+.heart-img {
+	width: 30px;
+}
+
+
+
+.list-container {
+	width:fit-content;
+	height: 500px;
+	overflow: scroll;
+	margin-left: 25px;
+	border-radius: 15px;
+	scroll-behavior: smooth;
+}
+
+.list-container::-webkit-scrollbar{ display:none; }
+
+/* 하단메뉴
+.fixedBar {
+	position: fixed;
+	width: 300px;
+	bottom: 0px;
+	margin: 0 10px;
+	padding: 5px 0 0 1px;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	justify-items: center;
+
+	background-color: white;
+	border-top: 2px solid gray;
+}
+.fixedBar .menuBtn {
+	height: 60px;
+	outline: none;
+	border: none;
+	background-color: transparent;
+	font-family: 'Jua', sans-serif;
+	width: 70px;
+}
+.fixedBar .menuBtn .menuBtnImg {
+	margin: auto;
+	/*display: block; 
+	height: 30px;
+}
+.fixedBar .menuBtn .menuBtnImg p {
+	padding-top: 3px;
+} 
+*/

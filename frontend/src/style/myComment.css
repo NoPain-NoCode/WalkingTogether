@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+:root {
+	--main-bg-color: #fbecc3;
+	margin: 0;
+	padding: 0;
+}
+
+
+
+
+
+/* 사이드바 */
+.sidebar {
+	display: flex;
+	flex-direction: column;
+    background-color: var(--main-bg-color);
+    padding-top: 20px;
+    border-radius: 20px;
+	height: fit-content;
+}
+hr {
+    width: 50%;
+    border: 0.01px solid rgb(205, 181, 136);
+}
+.menu {
+	display: block;
+    color: black;
+    text-decoration-line: none;
+    padding: 10px;
+}
+.menu:last-child {
+	margin-bottom: 20px;
+}
+.menu:nth-child(4) {
+	color: rgb(157, 129, 76);
+}
+
+
+.container2 {
+	display: grid;
+	grid-template-columns: 200px 630px;
+    margin-top: 20px;
+}
+
+.btn {
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Jua', sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: var(--main-bg-color);
+    color: rgb(157, 129, 76);
+}
+
+.list-container {
+	width:fit-content;
+	height: 500px;
+	overflow: scroll;
+	border-radius: 15px;
+	margin: 0 0 0 15px;
+}
+
+.list-container::-webkit-scrollbar{ display:none; }
+
+.list {
+    display: grid;
+}
+
+.box {
+	padding: 20px;
+	background-color: var(--main-bg-color);
+	border-radius: 15px;
+	margin-bottom: 10px;
+}
+.info {
+	text-align: left;
+	margin-right: auto;
+	
+}
+
+
+.path-address {
+	float: left;
+	margin: 20px;
+}
+
+.editBtn {
+	float: right;
+	text-align: right;
+    background-color: white;
+    border-radius: 5px;
+    padding: 4px 8px;
+	margin-top: 5px;
+    border: 1px solid #717171;
+    cursor: pointer;
+    color: #717171;
+	font-size: 16px;
+}
+.heart-img {
+	width: 30px;
+}
+
+
+.list::-webkit-scrollbar {
+	display: none;
+}
+
+.messageListWrap{
+	border: 1px solid #717171;
+	border-radius: 10px;
+	padding: 5px;
+}
+.messageListWrap::-webkit-scrollbar {
+	display: none;
+}

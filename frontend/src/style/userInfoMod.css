@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+
+/* 유저 */
+.user-container {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-grow: 1;
+}
+
+.loginBtn:hover {
+	cursor: pointer;
+}
+
+/* 유저 아이콘 */
+.mypageBtn {
+	outline: none;
+	border: 0;
+	background: transparent;
+	/* line-height: 80px; */
+	justify-content: flex-end;
+}
+#mypageBtnImg {
+	width: 20px;
+	vertical-align: middle;
+}
+
+
+
+.container2 {
+    margin: 20px;
+    padding: 20px;
+    border: .1px solid rgb(219, 219, 219);
+    border-radius: 20px;
+    width: 400px;
+    
+    position: absolute;
+    left: 50%;
+    top: 300px;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+	margin: 15px;
+}
+
+.content1 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.userInfo {
+    margin: 5px;
+}
+
+.btn {
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Jua', sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: var(--main-bg-color);
+    color: rgb(157, 129, 76);
+}
+
+input[type="radio"]:checked {
+  }
+
+input:checked + label {
+color: rgb(162, 138, 32);
+}
+
+.email {
+	border-radius: 6px;
+	border: 2px solid var(--main-bg-color);
+    box-shadow: 0 2px 5px 2px rgb(64 60 67 / 16%) inset;
+	/* margin: 20px 10px 10px 10px;
+	padding: 10px 15px; */
+	height: 30px;
+	/* width: 100%; */
+	flex-grow: 2;
+}
