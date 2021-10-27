@@ -63,7 +63,7 @@ https://www.wannawalk.co.kr:3001/
 ![letters](docs/img/screen_9.PNG)
 ![letters](docs/img/screen_11.PNG)
 ![letters](docs/img/screen_8.PNG)
-![letters](docs/img/scren_12.PNG)
+![letters](docs/img/scrren_12.PNG)
 
 
 ### DB
