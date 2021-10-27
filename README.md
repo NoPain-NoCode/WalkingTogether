@@ -41,6 +41,7 @@ https://www.wannawalk.co.kr:3001/
 
 
 ### 구현화면
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/64348346/139110319-85d63624-165a-47a2-ba96-d2d9ef09fe17.gif)
 #### 메인화면
 ![mainscreen](docs/img/screen_1.PNG)
 
