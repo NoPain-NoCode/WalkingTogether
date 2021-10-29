@@ -46,8 +46,11 @@ https://www.wannawalk.co.kr:3001/
 ![mainscreen](docs/img/screen_1.PNG)
 
 #### 산책로 검색화면
+![searchscreen](docs/img/screen_13.png)
+![searchscreen](docs/img/screen_14.PNG)
 
 #### 로그인
+![searchscreen](docs/img/screen_15.png)
 
 #### 마이페이지
 ![mypage1](docs/img/screen_4.PNG)
